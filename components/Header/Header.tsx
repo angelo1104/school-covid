@@ -6,6 +6,11 @@ import styled from "styled-components";
 const CloseButton = styled(IconButton)`
   padding: 3px;
   color: gray;
+  outline: none;
+
+  &:focus {
+    outline: none;
+  }
 
   @media only screen and (min-width: 728px) {
     padding: 6px;
