@@ -4,7 +4,7 @@ import { Close } from "@material-ui/icons";
 import styled from "styled-components";
 
 const CloseButton = styled(IconButton)`
-  padding: 3px;
+  padding: 3px !important;
   color: gray;
   outline: none;
 
@@ -13,16 +13,20 @@ const CloseButton = styled(IconButton)`
   }
 
   @media only screen and (min-width: 728px) {
-    padding: 6px;
+    padding: 6px !important;
   }
 `;
 
 function Header() {
   return (
-    <header className={"shadow-md py-5 px-1 md:px-8 flex flex-row"}>
+    <header
+      className={
+        "border border-gray-200 py-4 px-1 md:px-8 flex flex-row items-center bg-white"
+      }
+    >
       <p
         className={
-          "text-2xl md:text-3xl lg:text-4xl text-gray font-bold justify-self-start items-center"
+          "text-2xl md:text-3xl lg:text-4xl text-gray font-bold justify-self-start"
         }
       >
         Tweeties

@@ -5,7 +5,9 @@ export default function Home() {
   return (
     <>
       <Header />
-      <Spinner />
+      <main className={""}>
+        <Spinner />
+      </main>
     </>
   );
 }
