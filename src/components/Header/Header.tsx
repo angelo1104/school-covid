@@ -104,8 +104,8 @@ function Header() {
           value={query.split("#covid19india ")[1]}
           onChange={(event) => handleQueryChange(event.target.value)}
         />
-        <CloseButton >
-       <ClearIcon  />
+        <CloseButton className={'close'}>
+       <ClearIcon  style={{color:'black !important', backgroundColor:'gray !important'}}/>
         </CloseButton>
       </div>
     </header>
