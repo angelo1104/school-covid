@@ -97,9 +97,9 @@ function Header() {
           "m-auto w-3/5 md:w-4/6 flex justify-between items-center border-2 border-gray-300 rounded-xl py-1 px-3 dark:text-white dark:bg-gray-700"
         }
       >
-        <p className={"flex items-center mr-2"}>#covid19india</p>
+        <p className={"flex items-center mr-2 dark:bg-gray-900"}>#covid19india</p>
         <Input
-          className={"flex-grow -mb-0.5 dark:bg-gray-600"}
+          className={"flex-grow -mb-0.5 dark:bg-gray-700"}
           disableUnderline
           value={query.split("#covid19india ")[1]}
           onChange={(event) => handleQueryChange(event.target.value)}
