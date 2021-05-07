@@ -2,6 +2,8 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import { RecoilRoot } from "recoil";
 import "../../styles/globals.scss";
+import { ApolloProvider } from "@apollo/client";
+import client from "../apollo-client/client";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -11,7 +13,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <RecoilRoot>
-        <Component {...pageProps} />
+        <ApolloProvider client={client}>
+          <Component {...pageProps} />
+        </ApolloProvider>
       </RecoilRoot>
     </>
   );

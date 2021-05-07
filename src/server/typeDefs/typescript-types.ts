@@ -51,3 +51,9 @@ export type TweetsInput = {
   query: Scalars["String"];
   lastTweet?: Maybe<Scalars["ID"]>;
 };
+
+export type GetTweet = {
+  id: Scalars["ID"];
+  text: Scalars["String"];
+  created_at: Scalars["String"];
+};
