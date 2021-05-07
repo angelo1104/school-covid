@@ -105,7 +105,7 @@ function Header() {
           onChange={(event) => handleQueryChange(event.target.value)}
         />
         <CloseButton className={'close'}>
-       <ClearIcon  style={{color:'black !important', backgroundColor:'gray !important'}}/>
+       <ClearIcon  style={{color:'black !important'}}/>
         </CloseButton>
       </div>
     </header>
