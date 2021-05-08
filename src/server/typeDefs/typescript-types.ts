@@ -38,6 +38,13 @@ export type Entities = {
   urls: Array<Maybe<Url>>;
 };
 
+export type User = {
+  __typename?: "User";
+  name: Scalars["String"];
+  screen_name: Scalars["String"];
+  profile_image_url: Scalars["String"];
+};
+
 export type Tweet = {
   __typename?: "Tweet";
   created_at: Scalars["String"];
@@ -45,6 +52,9 @@ export type Tweet = {
   text: Scalars["String"];
   truncated: Scalars["Boolean"];
   entities?: Maybe<Entities>;
+  favorite_count: Scalars["Int"];
+  retweet_count: Scalars["Int"];
+  user: User;
 };
 
 export type TweetsInput = {
@@ -53,7 +63,12 @@ export type TweetsInput = {
 };
 
 export type GetTweet = {
+  created_at: Scalars["String"];
   id: Scalars["ID"];
   text: Scalars["String"];
-  created_at: Scalars["String"];
+  truncated: Scalars["Boolean"];
+  entities?: Maybe<Entities>;
+  favorite_count: Scalars["Int"];
+  retweet_count: Scalars["Int"];
+  user: User;
 };

@@ -2,6 +2,10 @@ import Twitter from "../../twitter";
 import GraphQLJSON from "graphql-type-json";
 import { Tweet, TweetsInput } from "../typeDefs/typescript-types";
 
+interface ResponseTweet extends Tweet {
+  id_str: string;
+}
+
 const resolvers = {
   JSON: GraphQLJSON,
   Query: {
@@ -11,7 +15,7 @@ const resolvers = {
 
       interface Response {
         data: {
-          statuses: Tweet[];
+          statuses: ResponseTweet[];
         };
       }
 
@@ -20,12 +24,12 @@ const resolvers = {
           data: { statuses: tweets },
         }: Response = (await Twitter.get("/search/tweets", {
           q: query,
-          result_type: "mixed",
-          count: 30,
+          count: 10,
           since_id: lastTweet || undefined,
         })) as Response;
 
-        return tweets;
+        console.log(tweets[0].id_str);
+        return tweets.map((tweet) => ({ ...tweet, id: tweet.id_str }));
       } catch (error) {
         console.log(error);
         throw new Error("We encountered an error while getting tweets.");

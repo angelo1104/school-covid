@@ -22,12 +22,21 @@ const typeDefs = gql`
     urls: [Url]!
   }
 
+  type User {
+    name: String!
+    screen_name: String!
+    profile_image_url: String!
+  }
+
   type Tweet {
     created_at: String!
     id: ID!
     text: String!
     truncated: Boolean!
     entities: Entities
+    favorite_count: Int!
+    retweet_count: Int!
+    user: User
   }
 
   input TweetsInput {
