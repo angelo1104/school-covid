@@ -63,12 +63,5 @@ export type TweetsInput = {
 };
 
 export type GetTweet = {
-  created_at: Scalars["String"];
   id: Scalars["ID"];
-  text: Scalars["String"];
-  truncated: Scalars["Boolean"];
-  entities?: Maybe<Entities>;
-  favorite_count: Scalars["Int"];
-  retweet_count: Scalars["Int"];
-  user: User;
 };

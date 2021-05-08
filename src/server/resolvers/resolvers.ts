@@ -28,7 +28,6 @@ const resolvers = {
           since_id: lastTweet || undefined,
         })) as Response;
 
-        console.log(tweets[0].id_str);
         return tweets.map((tweet) => ({ ...tweet, id: tweet.id_str }));
       } catch (error) {
         console.log(error);

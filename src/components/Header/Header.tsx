@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { IconButton, Input } from "@material-ui/core";
-import ClearIcon from '@material-ui/icons/Clear';
+import ClearIcon from "@material-ui/icons/Clear";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import queryState from "../../atoms/query";
@@ -52,8 +52,6 @@ function Header() {
   };
 
   useEffect(() => {
-    console.log(data?.tweets[0]?.text, data?.tweets[0]?.id, error, loading);
-
     if (loading)
       setTweets({
         tweets: [],
@@ -97,15 +95,17 @@ function Header() {
           "m-auto w-3/5 md:w-4/6 flex justify-between items-center border-2 border-gray-300 rounded-xl py-1 px-3 dark:text-white dark:bg-gray-700"
         }
       >
-        <p className={"flex items-center mr-2 dark:bg-gray-900"}>#covid19india</p>
+        <p className={"flex items-center mr-2 dark:bg-gray-900"}>
+          #covid19india
+        </p>
         <Input
           className={"flex-grow -mb-0.5 dark:bg-gray-700"}
           disableUnderline
           value={query.split("#covid19india ")[1]}
           onChange={(event) => handleQueryChange(event.target.value)}
         />
-        <CloseButton className={'close'}>
-       <ClearIcon  style={{color:'black !important'}}/>
+        <CloseButton className={"close"}>
+          <ClearIcon style={{ color: "black !important" }} />
         </CloseButton>
       </div>
     </header>
