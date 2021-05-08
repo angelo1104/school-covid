@@ -4,7 +4,7 @@ import tweetsState from "../../atoms/tweets";
 import Spinner from "../Spinner/Spinner";
 import dynamic from "next/dynamic";
 import Skeleton from "react-loading-skeleton";
-import styled from "styled-components";
+import LoadMore from "./LoadMore";
 
 const Tweet = dynamic(
   // @ts-ignore
@@ -13,16 +13,6 @@ const Tweet = dynamic(
     loading: () => <Skeleton height={400} />,
   }
 );
-
-const LoadMoreButton = styled.button`
-  width: 200px;
-  border-radius: 1000px;
-  margin: 30px auto;
-
-  :hover {
-    filter: brightness(95%);
-  }
-`;
 
 function App() {
   const [tweets] = useRecoilState(tweetsState);
@@ -44,11 +34,7 @@ function App() {
         />
       ))}
 
-      {!loading && (
-        <LoadMoreButton className={"bg-blue-500 text-white py-1"}>
-          Load More
-        </LoadMoreButton>
-      )}
+      <LoadMore loading={loading} />
     </div>
   );
 }
