@@ -13,6 +13,10 @@ function App() {
     if (tweets.loading) setLoading(true);
   }, [tweets.loading, loading]);
 
+  useEffect(() => {
+    console.log("TWEETETS", tweets);
+  }, [tweets]);
+
   return (
     <div className={"flex justify-center flex-col pb-4"}>
       {loading && <Spinner />}

@@ -31,7 +31,7 @@ function Header() {
   }, [query]);
 
   const handleQueryChange = (query: string) => {
-    setQuery(`${COVID_19_INDIA} ${query}`);
+    setQuery(`${COVID_19_INDIA}${query}`);
   };
 
   return (

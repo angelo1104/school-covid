@@ -4,6 +4,7 @@ import { useRecoilState } from "recoil";
 import Spinner from "../Spinner/Spinner";
 import queryState from "../../atoms/query";
 import useSearchTweets from "../../hooks/useSearchTweets";
+import tweetsState from "../../atoms/tweets";
 
 /*
  *   load more should not appear when the initial  things are loading i.e when there ain't any tweets.
@@ -34,12 +35,14 @@ interface Props {
 
 function LoadMore({ loading }: Props) {
   const [query] = useRecoilState(queryState);
+  const [tweets] = useRecoilState(tweetsState);
   const [showSpinner, setShowSpinner] = useState(false);
   const [showButton, setShowButton] = useState(!loading);
 
   const { searchTweets, data, error, loading: loadingMore } = useSearchTweets(
     query,
-    true
+    true,
+    1000
   );
 
   const toggle = (showButton: boolean) => {
@@ -61,7 +64,24 @@ function LoadMore({ loading }: Props) {
     if (data?.tweets) toggle(data?.tweets?.length != 0);
   }, [data, error, loadingMore]);
 
+  useEffect(() => {
+    if (loading && tweets.tweets.length && loadingMore) toggle(false);
+    else if (loading) {
+      setShowButton(false);
+      setShowSpinner(false);
+    }
+    // don't show if it is loading more
+    else if (tweets.tweets.length) toggle(true); // show if there are tweets and not loading
+  }, [loading]);
+
+  useEffect(() => {
+    console.log(
+      `Show button => ${showButton} and Show spinner => ${showSpinner}`
+    );
+  }, [showButton, showSpinner]);
+
   const fetchMoreTweets = () => {
+    console.log("LLOOOOOOOOAAAA");
     searchTweets();
   };
 

@@ -13,29 +13,36 @@ interface Output {
   loading: boolean;
 }
 
-const useSearchTweets = (query: string, lastTweet?: boolean): Output => {
+const useSearchTweets = (
+  query: string,
+  lastTweet?: boolean,
+  wait?: number
+): Output => {
   const [getTweets, { data, error, loading }] = useLazyQuery(GET_TWEETS);
   const [tweets, setTweets] = useRecoilState(tweetsState);
 
   const searchTweets = useCallback(
-    debounce(
-      () =>
-        getTweets({
-          variables: {
-            tweet: {
-              query,
-              lastTweet:
-                lastTweet && tweets.tweets[tweets.tweets.length - 1].id,
-            },
+    debounce(() => {
+      const lastTweetId = tweets.tweets.length
+        ? tweets.tweets[tweets.tweets.length - 1].id
+        : undefined;
+      console.log("lmao", lastTweetId);
+
+      getTweets({
+        variables: {
+          tweet: {
+            query,
+            lastTweet: lastTweet ? lastTweetId : undefined,
           },
-        }),
-      200
-    ),
-    [query, lastTweet]
+        },
+      });
+    }, wait || 200),
+    [query, lastTweet, tweets]
   );
 
   useEffect(() => {
-    updateTweets(setTweets, data, error, loading);
+    const usePreviousTweets = lastTweet ? tweets : undefined;
+    updateTweets(setTweets, data, error, loading, usePreviousTweets);
   }, [data, error, loading]);
 
   return {
