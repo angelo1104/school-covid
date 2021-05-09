@@ -5,6 +5,7 @@ import Spinner from "../Spinner/Spinner";
 import queryState from "../../atoms/query";
 import useSearchTweets from "../../hooks/useSearchTweets";
 import tweetsState from "../../atoms/tweets";
+import { KeyboardArrowDown } from "@material-ui/icons";
 
 /*
  *   load more should not appear when the initial  things are loading i.e when there ain't any tweets.
@@ -32,6 +33,10 @@ const LoadMoreButton = styled.button`
 interface Props {
   loading: boolean;
 }
+
+const DownIcon = styled(KeyboardArrowDown)`
+  margin-top: -2px;
+`;
 
 function LoadMore({ loading }: Props) {
   const [query] = useRecoilState(queryState);
@@ -74,14 +79,7 @@ function LoadMore({ loading }: Props) {
     else if (tweets.tweets.length) toggle(true); // show if there are tweets and not loading
   }, [loading]);
 
-  useEffect(() => {
-    console.log(
-      `Show button => ${showButton} and Show spinner => ${showSpinner}`
-    );
-  }, [showButton, showSpinner]);
-
   const fetchMoreTweets = () => {
-    console.log("LLOOOOOOOOAAAA");
     searchTweets();
   };
 
@@ -94,7 +92,7 @@ function LoadMore({ loading }: Props) {
           className={"bg-blue-500 text-white py-1"}
           onClick={fetchMoreTweets}
         >
-          Load More
+          Load More <DownIcon />
         </LoadMoreButton>
       )}
     </div>

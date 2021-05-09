@@ -11,7 +11,6 @@
     margin: 0;
     box-sizing: border-box;
     font-family: "Inter", sans-serif;
-    @apply dark:bg-gray-900
   }
 
   .close {
@@ -19,7 +18,7 @@
   }
 
   body {
-    @apply bg-gray-50;
+    @apply bg-black;
   }
 }
 
