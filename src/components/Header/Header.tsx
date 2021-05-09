@@ -1,14 +1,10 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import { IconButton, Input } from "@material-ui/core";
 import ClearIcon from "@material-ui/icons/Clear";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import queryState from "../../atoms/query";
-import { GET_TWEETS } from "../../apollo-client/queries";
-import { useLazyQuery } from "@apollo/client";
-import tweetsState from "../../atoms/tweets";
-import { debounce } from "lodash";
-import updateTweets from "../../utils/update-tweets";
+import useSearchTweets from "../../hooks/useSearchTweets";
 
 const CloseButton = styled(IconButton)`
   padding: 3px !important;
@@ -25,24 +21,9 @@ const CloseButton = styled(IconButton)`
 `;
 
 function Header() {
-  const [getTweets, { data, error, loading }] = useLazyQuery(GET_TWEETS);
   const [query, setQuery] = useRecoilState(queryState);
-  const [_tweets, setTweets] = useRecoilState(tweetsState);
 
-  const searchTweets = useCallback(
-    debounce(
-      () =>
-        getTweets({
-          variables: {
-            tweet: {
-              query,
-            },
-          },
-        }),
-      200
-    ),
-    [query]
-  );
+  const { searchTweets } = useSearchTweets(query);
 
   useEffect(() => {
     searchTweets();
@@ -51,10 +32,6 @@ function Header() {
   const handleQueryChange = (query: string) => {
     setQuery(`#covid19india ${query}`);
   };
-
-  useEffect(() => {
-    updateTweets(setTweets, data, error, loading);
-  }, [data, error, loading]);
 
   return (
     <header

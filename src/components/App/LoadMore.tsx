@@ -1,13 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
-import tweetsState from "../../atoms/tweets";
 import Spinner from "../Spinner/Spinner";
-import { debounce } from "lodash";
-import { useLazyQuery } from "@apollo/client";
-import { GET_TWEETS } from "../../apollo-client/queries";
 import queryState from "../../atoms/query";
-import updateTweets from "../../utils/update-tweets";
+import useSearchTweets from "../../hooks/useSearchTweets";
 
 /*
  *   load more should not appear when the initial  things are loading i.e when there ain't any tweets.
@@ -37,13 +33,14 @@ interface Props {
 }
 
 function LoadMore({ loading }: Props) {
-  const [tweets, setTweets] = useRecoilState(tweetsState);
   const [query] = useRecoilState(queryState);
-  const [getTweets, { data, error, loading: loadingMore }] = useLazyQuery(
-    GET_TWEETS
-  );
   const [showSpinner, setShowSpinner] = useState(false);
   const [showButton, setShowButton] = useState(!loading);
+
+  const { searchTweets, data, error, loading: loadingMore } = useSearchTweets(
+    query,
+    true
+  );
 
   const toggle = (showButton: boolean) => {
     if (showButton) {
@@ -57,30 +54,12 @@ function LoadMore({ loading }: Props) {
   };
 
   useEffect(() => {
-    updateTweets(setTweets, data, error, loadingMore, tweets);
-
     if (loadingMore) toggle(false);
 
     if (error) toggle(true);
 
     if (data?.tweets) toggle(data?.tweets?.length != 0);
   }, [data, error, loadingMore]);
-
-  const searchTweets = useCallback(
-    debounce(
-      () =>
-        getTweets({
-          variables: {
-            tweet: {
-              query,
-              lastTweet: tweets.tweets[tweets.tweets.length - 1],
-            },
-          },
-        }),
-      200
-    ),
-    [query]
-  );
 
   const fetchMoreTweets = () => {
     searchTweets();
