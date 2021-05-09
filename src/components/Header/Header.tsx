@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import queryState from "../../atoms/query";
 import useSearchTweets from "../../hooks/useSearchTweets";
+import { COVID_19_INDIA } from "../../constants";
 
 const CloseButton = styled(IconButton)`
   padding: 3px !important;
@@ -30,7 +31,7 @@ function Header() {
   }, [query]);
 
   const handleQueryChange = (query: string) => {
-    setQuery(`#covid19india ${query}`);
+    setQuery(`${COVID_19_INDIA} ${query}`);
   };
 
   return (
@@ -53,15 +54,18 @@ function Header() {
         }
       >
         <p className={"flex items-center mr-2 dark:bg-gray-900"}>
-          #covid19india
+          {COVID_19_INDIA}
         </p>
         <Input
           className={"flex-grow -mb-0.5 dark:bg-gray-700"}
           disableUnderline
-          value={query.split("#covid19india ")[1]}
+          value={query.split(COVID_19_INDIA)[1]}
           onChange={(event) => handleQueryChange(event.target.value)}
         />
-        <CloseButton className={"close"}>
+        <CloseButton
+          className={"close"}
+          onClick={() => setQuery(COVID_19_INDIA)}
+        >
           <ClearIcon style={{ color: "black !important" }} />
         </CloseButton>
       </div>
