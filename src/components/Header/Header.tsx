@@ -8,6 +8,7 @@ import { GET_TWEETS } from "../../apollo-client/queries";
 import { useLazyQuery } from "@apollo/client";
 import tweetsState from "../../atoms/tweets";
 import { debounce } from "lodash";
+import updateTweets from "../../utils/update-tweets";
 
 const CloseButton = styled(IconButton)`
   padding: 3px !important;
@@ -52,28 +53,7 @@ function Header() {
   };
 
   useEffect(() => {
-    if (loading)
-      setTweets({
-        tweets: [],
-        loading: loading,
-        error: null,
-      });
-
-    if (error) {
-      setTweets({
-        tweets: [],
-        loading: false,
-        // @ts-ignore
-        error: error,
-      });
-    }
-
-    if (data?.tweets)
-      setTweets({
-        tweets: data.tweets,
-        loading: false,
-        error: null,
-      });
+    updateTweets(setTweets, data, error, loading);
   }, [data, error, loading]);
 
   return (

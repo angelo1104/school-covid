@@ -2,17 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import tweetsState from "../../atoms/tweets";
 import Spinner from "../Spinner/Spinner";
-import dynamic from "next/dynamic";
-import Skeleton from "react-loading-skeleton";
 import LoadMore from "./LoadMore";
-
-const Tweet = dynamic(
-  // @ts-ignore
-  () => import("react-twitter-widgets").then((module) => module.Tweet),
-  {
-    loading: () => <Skeleton height={400} />,
-  }
-);
+import { Tweet } from "react-twitter-widgets";
 
 function App() {
   const [tweets] = useRecoilState(tweetsState);
@@ -20,7 +11,6 @@ function App() {
 
   useEffect(() => {
     if (tweets.loading) setLoading(true);
-    console.log("loader", loading);
   }, [tweets.loading, loading]);
 
   return (

@@ -7,6 +7,15 @@ import { debounce } from "lodash";
 import { useLazyQuery } from "@apollo/client";
 import { GET_TWEETS } from "../../apollo-client/queries";
 import queryState from "../../atoms/query";
+import updateTweets from "../../utils/update-tweets";
+
+/*
+ *   load more should not appear when the initial  things are loading i.e when there ain't any tweets.
+ *   load more should appear when there are tweets
+ *   it should show a load more spinner if there are tweets but it is still loading
+ *   load more should not appear when the tweets card is loading
+ *   it should not appear when there are no more tweets for a particular query.
+ * */
 
 const LoadMoreButton = styled.button`
   width: 200px;
@@ -29,41 +38,33 @@ interface Props {
 
 function LoadMore({ loading }: Props) {
   const [tweets, setTweets] = useRecoilState(tweetsState);
-  const [loaded, setLoaded] = useState(false);
   const [query] = useRecoilState(queryState);
-  const [getTweets, { data, error, loading: loadMore }] = useLazyQuery(
+  const [getTweets, { data, error, loading: loadingMore }] = useLazyQuery(
     GET_TWEETS
   );
+  const [showSpinner, setShowSpinner] = useState(false);
+  const [showButton, setShowButton] = useState(!loading);
 
-  useEffect(() => {
-    if (!loading && tweets.tweets.length) setLoaded(true);
-    else if (tweets.tweets.length) setLoaded(false);
-  }, [loading]);
-
-  useEffect(() => {
-    if (loadMore)
-      setTweets({
-        tweets: tweets.tweets,
-        loading: loadMore,
-        error: null,
-      });
-
-    if (error) {
-      setTweets({
-        tweets: tweets.tweets,
-        loading: false,
-        // @ts-ignore
-        error: error,
-      });
+  const toggle = (showButton: boolean) => {
+    if (showButton) {
+      setShowButton(true);
+      setShowSpinner(false);
+      return;
     }
 
-    if (data?.tweets)
-      setTweets({
-        tweets: [...tweets.tweets, ...data?.tweets],
-        loading: false,
-        error: null,
-      });
-  }, [data, error, loadMore]);
+    setShowSpinner(true);
+    setShowButton(false);
+  };
+
+  useEffect(() => {
+    updateTweets(setTweets, data, error, loadingMore, tweets);
+
+    if (loadingMore) toggle(false);
+
+    if (error) toggle(true);
+
+    if (data?.tweets) toggle(data?.tweets?.length != 0);
+  }, [data, error, loadingMore]);
 
   const searchTweets = useCallback(
     debounce(
@@ -86,10 +87,10 @@ function LoadMore({ loading }: Props) {
   };
 
   return (
-    <>
-      {loading && loaded && <Spinner />}
+    <div className={"flex flex-col justify-center items-center"}>
+      {showSpinner && <Spinner />}
 
-      {loaded && (
+      {showButton && (
         <LoadMoreButton
           className={"bg-blue-500 text-white py-1"}
           onClick={fetchMoreTweets}
@@ -97,7 +98,7 @@ function LoadMore({ loading }: Props) {
           Load More
         </LoadMoreButton>
       )}
-    </>
+    </div>
   );
 }
 
