@@ -2,8 +2,11 @@ import React from "react";
 import { VisualPickerOption } from "react-rainbow-components";
 import styled from "styled-components";
 import Image from "next/image";
+import { MedicalResource } from "../../data/medicalResources";
 
 const DarkVisualPicker = styled(VisualPickerOption)`
+  margin: 0 10px;
+
   span[data-id="visual-picker_option"] {
     background: transparent !important;
   }
@@ -18,12 +21,12 @@ const DarkVisualPicker = styled(VisualPickerOption)`
   }
 `;
 
-function ResourceOption() {
+function ResourceOption({ imageUrl, name }: MedicalResource) {
   return (
-    <DarkVisualPicker name={"oxygen"}>
+    <DarkVisualPicker name={name}>
       <Image
-        src={"/images/mac.jpg"}
-        alt={"oxygen"}
+        src={imageUrl}
+        alt={name}
         layout={"fill"}
         className={"display-image"}
       />

@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { IconButton, Input } from "@material-ui/core";
 import ClearIcon from "@material-ui/icons/Clear";
 import styled from "styled-components";
-import { useRecoilState } from "recoil";
 import queryState from "../../atoms/query";
-import useSearchTweets from "../../hooks/useSearchTweets";
 import { COVID_19_INDIA } from "../../constants";
 import { Search } from "@material-ui/icons";
+import filtersState from "../../atoms/filters";
+import { useRecoilState } from "recoil";
 
 const CloseButton = styled(IconButton)`
   padding: 3px !important;
@@ -28,12 +28,7 @@ const SearchInput = styled(Input)`
 
 function Header() {
   const [query, setQuery] = useRecoilState(queryState);
-
-  const { searchTweets } = useSearchTweets(query);
-
-  useEffect(() => {
-    searchTweets();
-  }, [query]);
+  const [filters, setFilters] = useRecoilState(filtersState);
 
   const handleQueryChange = (query: string) => {
     setQuery(`${COVID_19_INDIA}${query}`);
@@ -59,7 +54,13 @@ function Header() {
         }
       >
         <Search className={"color-gray"} />
-        <p className={"flex items-center mx-2 color-gray"}>{COVID_19_INDIA}</p>
+        <p
+          className={
+            "flex items-center mx-2 color-gray whitespace-wrap lg:whitespace-nowrap"
+          }
+        >
+          {COVID_19_INDIA} {filters.join(" ")}
+        </p>
         <SearchInput
           className={"flex-grow -mb-0.5"}
           disableUnderline
@@ -68,7 +69,10 @@ function Header() {
         />
         <CloseButton
           className={"close"}
-          onClick={() => setQuery(COVID_19_INDIA)}
+          onClick={() => {
+            setQuery(COVID_19_INDIA);
+            setFilters([]);
+          }}
         >
           <ClearIcon className={"color-gray"} />
         </CloseButton>
