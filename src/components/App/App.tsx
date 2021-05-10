@@ -6,6 +6,7 @@ import LoadMore from "./LoadMore";
 import { Tweet } from "react-twitter-widgets";
 import { VisualPicker } from "react-rainbow-components";
 import { COVID_19_INDIA } from "../../constants";
+import ResourceOption from "../ResourceOption/ResourceOption";
 
 function App() {
   const [tweets] = useRecoilState(tweetsState);
@@ -24,31 +25,14 @@ function App() {
     theme: "dark",
   };
 
-  const handleOxygen = () => {
-    setQuery(
-      `${COVID_19_INDIA} #Oxygen #Bihar #OxygenCylinder #Covid19IndiaHelp `
-    );
-  };
-  const handleOxygenConcentrator = () => {
-    setQuery(
-      `${COVID_19_INDIA} #Oxygen #Bihar #Covid19IndiaHelp #OxygenConcentrator  `
-    );
-  };
   return (
     <div className={"flex justify-center flex-col pb-4"}>
       <VisualPicker
         id="visual-picker-component-1"
         label="Select Option"
-        value={value}
+        value={medicalResources}
       >
-        <VisualPickerOption
-          name="Oxygen"
-          onClick={handleOxygen}
-        ></VisualPickerOption>
-        <VisualPickerOption
-          name="Oxygen Concentrator"
-          onClick={handleOxygenConcentrator}
-        ></VisualPickerOption>
+        <ResourceOption />
       </VisualPicker>
       {loading && <Spinner />}
       {tweets.tweets.map((tweet) => (

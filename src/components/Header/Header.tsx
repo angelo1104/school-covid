@@ -6,10 +6,10 @@ import { useRecoilState } from "recoil";
 import queryState from "../../atoms/query";
 import useSearchTweets from "../../hooks/useSearchTweets";
 import { COVID_19_INDIA } from "../../constants";
+import { Search } from "@material-ui/icons";
 
 const CloseButton = styled(IconButton)`
   padding: 3px !important;
-  color: gray;
   outline: none;
 
   &:focus {
@@ -19,6 +19,11 @@ const CloseButton = styled(IconButton)`
   @media only screen and (min-width: 728px) {
     padding: 6px !important;
   }
+`;
+
+const SearchInput = styled(Input)`
+  color: #d9d9d9 !important;
+  caret-color: #d9d9d9;
 `;
 
 function Header() {
@@ -37,12 +42,12 @@ function Header() {
   return (
     <header
       className={
-        "border border-gray-200 py-4 px-1 md:px-8 flex flex-row items-center bg-black bg-opacity-40 text-white dark:border-0"
+        "py-4 px-1 md:px-8 flex flex-row items-center border border-1 border-gray"
       }
     >
       <p
         className={
-          "text-2xl md:text-3xl lg:text-4xl text-gray font-bold justify-self-start dark:text-white "
+          "text-2xl md:text-3xl lg:text-4xl font-bold justify-self-start color-gray"
         }
       >
         Tweeties
@@ -50,14 +55,13 @@ function Header() {
 
       <div
         className={
-          "m-auto w-3/5 md:w-4/6 flex justify-between items-center border-2 border-gray-300 rounded-xl py-1 px-3 dark:text-white dark:bg-gray-700"
+          "m-auto w-3/5 md:w-4/6 flex justify-between items-center rounded-xl py-1 px-3 background-gray"
         }
       >
-        <p className={"flex items-center mr-2 dark:bg-gray-900"}>
-          {COVID_19_INDIA}
-        </p>
-        <Input
-          className={"flex-grow -mb-0.5 dark:bg-gray-700"}
+        <Search className={"color-gray"} />
+        <p className={"flex items-center mx-2 color-gray"}>{COVID_19_INDIA}</p>
+        <SearchInput
+          className={"flex-grow -mb-0.5"}
           disableUnderline
           value={query.split(COVID_19_INDIA)[1]}
           onChange={(event) => handleQueryChange(event.target.value)}
@@ -66,7 +70,7 @@ function Header() {
           className={"close"}
           onClick={() => setQuery(COVID_19_INDIA)}
         >
-          <ClearIcon style={{ color: "black !important" }} />
+          <ClearIcon className={"color-gray"} />
         </CloseButton>
       </div>
     </header>
