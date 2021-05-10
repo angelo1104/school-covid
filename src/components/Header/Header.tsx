@@ -26,9 +26,17 @@ const SearchInput = styled(Input)`
   caret-color: #d9d9d9;
 `;
 
+const ResponsiveParagraph = styled.p`
+  @media only screen and (max-width: 620px) {
+    display: none;
+  }
+`;
+
 function Header() {
   const [query, setQuery] = useRecoilState(queryState);
   const [filters, setFilters] = useRecoilState(filtersState);
+
+  const isQuery = query.split(`${COVID_19_INDIA}`)[1].length != 0;
 
   const handleQueryChange = (query: string) => {
     setQuery(`${COVID_19_INDIA}${query}`);
@@ -54,28 +62,31 @@ function Header() {
         }
       >
         <Search className={"color-gray"} />
-        <p
+        <ResponsiveParagraph
           className={
             "flex items-center mx-2 color-gray whitespace-wrap lg:whitespace-nowrap"
           }
         >
           {COVID_19_INDIA} {filters.join(" ")}
-        </p>
+        </ResponsiveParagraph>
         <SearchInput
           className={"flex-grow -mb-0.5"}
           disableUnderline
           value={query.split(COVID_19_INDIA)[1]}
           onChange={(event) => handleQueryChange(event.target.value)}
         />
-        <CloseButton
-          className={"close"}
-          onClick={() => {
-            setQuery(COVID_19_INDIA);
-            setFilters([]);
-          }}
-        >
-          <ClearIcon className={"color-gray"} />
-        </CloseButton>
+
+        {isQuery && (
+          <CloseButton
+            className={"close"}
+            onClick={() => {
+              setQuery(COVID_19_INDIA);
+              setFilters([]);
+            }}
+          >
+            <ClearIcon className={"color-gray"} />
+          </CloseButton>
+        )}
       </div>
     </header>
   );
