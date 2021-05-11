@@ -54,7 +54,7 @@ function Header() {
           "text-2xl md:text-3xl lg:text-4xl font-bold justify-self-start color-gray"
         }
       >
-        Tweeties
+        Radico
       </p>
 
       <div
@@ -68,18 +68,18 @@ function Header() {
             "flex items-center mx-2 color-gray whitespace-wrap lg:whitespace-nowrap"
           }
         >
-          {COVID_19_INDIA}{" "}
-          {filters
+          {/* {COVID_19_INDIA}{" "} */}
+          {/* {filters
             .map((filter) => {
               for (let resource of medicalResources)
                 if (resource.name === filter) return resource.displayName;
             })
-            .join(" ")}
+            .join(" ")} */}
         </ResponsiveParagraph>
         <SearchInput
           className={"flex-grow -mb-0.5"}
           disableUnderline
-          value={query.split(COVID_19_INDIA)[1]}
+          placeholder={"Search"}
           onChange={(event) => handleQueryChange(event.target.value)}
         />
 
