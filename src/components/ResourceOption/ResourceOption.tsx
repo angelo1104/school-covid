@@ -2,7 +2,6 @@ import React from "react";
 import { VisualPickerOption } from "react-rainbow-components";
 import styled from "styled-components";
 import Image from "next/image";
-import { MedicalResource } from "../../data/medicalResources";
 
 const DarkVisualPicker = styled(VisualPickerOption)`
   margin: 0 10px;
@@ -21,7 +20,12 @@ const DarkVisualPicker = styled(VisualPickerOption)`
   }
 `;
 
-function ResourceOption({ imageUrl, name }: MedicalResource) {
+interface Props {
+  name: string;
+  imageUrl: string;
+}
+
+function ResourceOption({ imageUrl, name }: Props) {
   return (
     <DarkVisualPicker name={name}>
       <Image
