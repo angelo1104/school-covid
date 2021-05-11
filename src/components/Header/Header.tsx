@@ -7,6 +7,7 @@ import { COVID_19_INDIA } from "../../constants";
 import { Search } from "@material-ui/icons";
 import filtersState from "../../atoms/filters";
 import { useRecoilState } from "recoil";
+import medicalResources from "../../data/medicalResources";
 
 const CloseButton = styled(IconButton)`
   padding: 3px !important;
@@ -67,7 +68,13 @@ function Header() {
             "flex items-center mx-2 color-gray whitespace-wrap lg:whitespace-nowrap"
           }
         >
-          {COVID_19_INDIA} {filters.join(" ")}
+          {COVID_19_INDIA}{" "}
+          {filters
+            .map((filter) => {
+              for (let resource of medicalResources)
+                if (resource.name === filter) return resource.displayName;
+            })
+            .join(" ")}
         </ResponsiveParagraph>
         <SearchInput
           className={"flex-grow -mb-0.5"}

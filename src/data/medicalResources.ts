@@ -1,17 +1,50 @@
 const medicalResources: MedicalResource[] = [
   {
-    name: "#oxygen",
-    imageUrl: "/images/mac.jpg",
+    name: "#Oxygen #Patna #OxygenCylinder #Verified",
+    imageUrl: "/images/oxygen.jpg",
+    displayName: "#Oxygen",
   },
   {
-    name: "#ventilator",
-    imageUrl: "/images/mac.jpg",
+    name: "#Patna #Ventilator #BedsAvailable",
+    imageUrl: "/images/ventilator.jpg",
+    displayName: "#Ventilator",
+  },
+  {
+    name: "#Patna #ambulance",
+    imageUrl: "/images/ambulance.jpg",
+    displayName: "#ambulance",
+  },
+  {
+    name: "#plasma #Patna",
+    imageUrl: "/images/plasma.webp",
+    displayName: "#plasma",
+  },
+  {
+    name: "#Remedesivir #Patna",
+    imageUrl: "/images/remedesivir.jpg",
+    displayName: "#Remedesivir",
+  },
+  {
+    name: "#Patna #ICUbeds #BedsAvailable",
+    imageUrl: "/images/ICU.webp",
+    displayName: "#ICU",
+  },
+  {
+    name: "#fabiflu #Patna",
+    imageUrl: "/images/fabiflu.jpeg",
+    displayName: "#fabiflu",
+  },
+  {
+    name: "#Patna #Oximeter",
+    imageUrl: "/images/oximeter.jpg",
+    displayName: "#Oximeter",
   },
 ];
 
 interface MedicalResource {
   name: string;
   imageUrl: string;
+  displayName: string;
 }
 
 export type { MedicalResource };
